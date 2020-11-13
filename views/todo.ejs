@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> 
+		Lab Home
+        </title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	</head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="todo">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Login page</a>
+                </li>
+            
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2 disabled" type="text" placeholder="Search is not available yet" aria-label="Search" readonly>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <form class="form-signin" action="/logout" method="GET">
+            <h1 class="h3 mb-3 font-weight-normal">Welcome <%= user %></h1>
+            
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Log Out</button>
+        </form>
+
+        <div class="card-body">
+            <form id="task-form">
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Enter task to be completed</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Do the dishes">
+                    <div class="input-group-append">
+                        <input type="submit" class="input-group-text task-add" value="Add">
+                    </div>
+                </div>
+                  <button type="button" class="btn btn-dark" id="removal">Remove Complete</button>
+                </div>
+            </form>
+
+
+            <div class="card-body" id="task-list2">
+                <% for (var i=0;i<storedTasks.length;i++){%>
+                    <%if (storedTasks[i].owner == undefined){%>
+                        <form class = 'list-form'>
+                            <input type="hidden" name="task_num" value ="<%= storedTasks[i]._id %>">
+        
+                            <div class="input-group">
+                                <p class="form-control"><%= storedTasks[i].name %></p>
+                                <div class="input-group-append">
+                                    <input type="submit" class="input-group-text task-claim" name = "claim" value="Claim"/>
+                                </div>
+                            </div>
+                        </form>
+                    <%} else if (storedTasks[i].owner != undefined) {if (storedTasks[i].owner.username == "test1@a.ca"){
+                            if (storedTasks[i].done == false){%>
+                            <form class = 'list-form'>
+                                <input type="hidden" name="task_num" value ="<%= storedTasks[i]._id %>">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox">
+                                        </div>
+                                    </div>
+                                    <p class="form-control"><%= storedTasks[i].name %></p>
+                                    <div class="input-group-append">
+                                        <input type="submit" class="input-group-text" name = "abandon" value="Abandon"/>
+                                    </div>
+                                </div>
+                            </form>
+                            <%} else {%>
+                                <form class = 'list-form'>
+                                    <input type="hidden" name="task_num" value ="<%= storedTasks[i]._id %>">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <input type="checkbox" checked>
+                                            </div>
+                                        </div>
+                                        <p class="form-control"><s><%= storedTasks[i].name %></s></p>
+                                        <div class="input-group-append">
+                                            <input type="submit" class="input-group-text" name = "abandon" value="Abandon"/>
+                                        </div>
+                                    </div>
+                                </form>
+                            <%}}if (storedTasks[i].owner.username == "test2@a.ca"){
+                                if (storedTasks[i].done == false){%>
+                                    <form class = 'list-form'>
+                                        <input type="hidden" value ="<%= storedTasks[i]._id %>">
+                                        <div class="input-group">
+                                            <p class="form-control"><%= storedTasks[i].name %></p>
+                                        </div>
+                                    </form>
+                                    <%} if (storedTasks[i].done == true) {%>
+                                    <form class = 'list-form finished'>
+                                        <input type="hidden" value ="<%= storedTasks[i]._id %>">
+                                        <div class="input-group">
+                                            <p class="form-control"><s><%= storedTasks[i].name %></s></p>
+                                        </div>
+                                    </form>
+                                <%}
+                            }
+                    }}%>
+            </div>
+        </div>
+
+
+
+
+
+        <script
+			  src="https://code.jquery.com/jquery-3.5.1.min.js"
+			  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+			  crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+   
+        <script src="script.js"></script>
+    </body>
+
+</html>
